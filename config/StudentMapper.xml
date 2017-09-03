@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="/mybatis/src/main/java/IDao/students">
+<!-- 	<resultMap type="edu.talh.learning.model.Student" id="StudentResult">
+		<id property="studId" column="stud_id" />
+		<result property="name" column="name" />
+		<result property="email" column="email" />
+		<result property="dob" column="dob" />
+	</resultMap> -->
+	 <select id ="selectAll" resultType = "edu.talh.learning.model.Student">
+		select * from students
+	</select> 
+	<select id ="selectById" resultType = "edu.talh.learning.model.Student">
+		select * from students where stud_id= #{id}
+	</select>
+	<!--  -->
+	<select id="selectmodel" resultType="edu.talh.learning.model.Student" parameterType="edu.talh.learning.model.Student">
+		<!-- ${} 与#{} 区别　：
+		　　＄｛｝不会根据参数类型填补参数（原文替换）
+		　　＃｛｝会根据参数类型填补参数（预编译输出）
+		 -->
+		select * from students 
+		<!-- 动态sql -->
+		<where>
+		<if test="studId !=null">
+		stud_id= #{studId}
+		</if>
+		<if test="name!=null">
+		and name = #{name}
+		</if>
+		
+		</where> 
+		
+	</select>
+	<!-- 用于测试接口测试 -->
+	<select id="selectbyid" parameterType="int" resultType="edu.talh.learning.model.Student">
+	select * from students where stud_id= #{id}
+	</select>
+</mapper>
